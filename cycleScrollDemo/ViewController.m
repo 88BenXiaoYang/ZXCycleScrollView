@@ -34,10 +34,13 @@
 }
 
 #pragma mark -- ZXCycleScrollViewDelegate
--(void)cycleScrollView:(ZXCycleScrollView *)scrollView didScrollToIndex:(NSInteger)index {
-    
+-(void)zxCycleScrollView:(ZXCycleScrollView *)scrollView didScrollToIndex:(NSInteger)index {
+    NSLog(@"index------%lu",index);
 }
 
+-(void)zxCycleScrollView:(ZXCycleScrollView *)scrollView didSelectItemAtIndex:(NSInteger)index {
+     NSLog(@"点击了----index------%lu",index);
+}
 
 
 - (void)didReceiveMemoryWarning {

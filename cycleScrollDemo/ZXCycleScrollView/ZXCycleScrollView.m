@@ -66,16 +66,22 @@
     //图片视图；左边
     self.leftIV = [[UIImageView alloc] init];
     self.leftIV.contentMode = UIViewContentModeScaleToFill;
+    self.leftIV.userInteractionEnabled = YES;
+    [self.leftIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftTapGes)]];
     [self.mainScrollView addSubview:self.leftIV];
     
     //图片视图；中间
     self.centerIV = [[UIImageView alloc] init];
     self.centerIV.contentMode = UIViewContentModeScaleToFill;
+    self.centerIV.userInteractionEnabled = YES;
+    [self.centerIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(centerTapGes)]];
     [self.mainScrollView addSubview:self.centerIV];
     
     //图片视图；右边
     self.rightIV = [[UIImageView alloc] init];
     self.rightIV.contentMode = UIViewContentModeScaleToFill;
+    self.rightIV.userInteractionEnabled = YES;
+    [self.rightIV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rightTapGes)]];
     [self.mainScrollView addSubview:self.rightIV];
     
     [self updateViewFrameSetting];
@@ -210,6 +216,26 @@
 
 
 #pragma mark -- action
+-(void)leftTapGes{
+    if([self.delegate respondsToSelector:@selector(zxCycleScrollView:didSelectItemAtIndex:)]){
+        NSInteger leftIndex = (unsigned long)((_currentImageIndex - 1 + self.imgCount) % self.imgCount);
+        [self.delegate zxCycleScrollView:self didSelectItemAtIndex:leftIndex];
+    }
+}
+
+-(void)rightTapGes{
+    if([self.delegate respondsToSelector:@selector(zxCycleScrollView:didSelectItemAtIndex:)]){
+         NSInteger rightIndex = (unsigned long)((_currentImageIndex + 1) % self.imgCount);
+        [self.delegate zxCycleScrollView:self didSelectItemAtIndex:rightIndex];
+    }
+}
+
+-(void)centerTapGes{
+    if([self.delegate respondsToSelector:@selector(zxCycleScrollView:didSelectItemAtIndex:)]){
+        [self.delegate zxCycleScrollView:self didSelectItemAtIndex:self.currentImageIndex];
+    }
+}
+
 -(void)createTimer {
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:self.autoScrollTimeInterval target:self selector:@selector(automaticScroll) userInfo:nil repeats:YES];
     _timer = timer;
